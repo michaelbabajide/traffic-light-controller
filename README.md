@@ -12,7 +12,7 @@ This repository contains a VHDL implementation of a traffic light controller for
 
 ## Introduction
 
-The Traffic Light Controller FPGA Project is a project developed using VHDL for an FPGA board. The project demonstrates the simulation of a traffic intersection with different traffic light phases. The logic implemented in VHDL controls the transitions between various states to simulate the behavior of traffic lights.
+The Traffic Light Controller is a project developed using VHDL for an FPGA board. The project demonstrates the simulation of a traffic intersection with different traffic light phases. The logic implemented in VHDL controls the transitions between various states to simulate the behavior of traffic lights.
 
 ## Features
 
