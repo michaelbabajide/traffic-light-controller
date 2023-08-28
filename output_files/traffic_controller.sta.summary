@@ -1,0 +1,77 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk_fpga'
+Slack : -4.147
+TNS   : -83.729
+
+Type  : Slow 1200mV 85C Model Setup 'clk_1Hz'
+Slack : -2.152
+TNS   : -16.831
+
+Type  : Slow 1200mV 85C Model Hold 'clk_1Hz'
+Slack : 0.362
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'clk_fpga'
+Slack : 0.434
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk_fpga'
+Slack : -3.000
+TNS   : -49.299
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk_1Hz'
+Slack : -1.403
+TNS   : -14.030
+
+Type  : Slow 1200mV 0C Model Setup 'clk_fpga'
+Slack : -3.766
+TNS   : -74.586
+
+Type  : Slow 1200mV 0C Model Setup 'clk_1Hz'
+Slack : -1.909
+TNS   : -14.825
+
+Type  : Slow 1200mV 0C Model Hold 'clk_1Hz'
+Slack : 0.327
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clk_fpga'
+Slack : 0.398
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk_fpga'
+Slack : -3.000
+TNS   : -49.299
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk_1Hz'
+Slack : -1.403
+TNS   : -14.030
+
+Type  : Fast 1200mV 0C Model Setup 'clk_fpga'
+Slack : -1.290
+TNS   : -18.122
+
+Type  : Fast 1200mV 0C Model Setup 'clk_1Hz'
+Slack : -0.292
+TNS   : -1.613
+
+Type  : Fast 1200mV 0C Model Hold 'clk_1Hz'
+Slack : 0.156
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clk_fpga'
+Slack : 0.175
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk_fpga'
+Slack : -3.000
+TNS   : -41.646
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk_1Hz'
+Slack : -1.000
+TNS   : -10.000
+
+------------------------------------------------------------

@@ -1,0 +1,93 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity traffic_controller is
+    port (
+        clk : in std_logic;
+        reset : in std_logic;
+        pedestrian_request : in std_logic;
+        manual_override : in std_logic;
+        leds : out std_logic_vector(1 downto 0);
+        hex_displays : out std_logic_vector(6 downto 0)
+    );
+end entity;
+
+architecture behaviour of traffic_controller is
+    type light_state is (RED, RED_YELLOW, GREEN, YELLOW, PEDESTRIAN);
+    signal h_state, v_state : light_state := RED;
+    signal counter : unsigned(27 downto 0) := (others => '0');
+    signal pedestrian_counter : unsigned(23 downto 0) := (others => '0');
+    signal countdown_timer : unsigned(11 downto 0) := (others => '0');
+    
+    constant RED_TIME : unsigned(27 downto 0) := to_unsigned(50000000, 28);
+    constant RED_YELLOW_TIME : unsigned(27 downto 0) := to_unsigned(5000000, 28);
+    constant GREEN_TIME : unsigned(27 downto 0) := to_unsigned(100000000, 28);
+    constant YELLOW_TIME : unsigned(27 downto 0) := to_unsigned(5000000, 28);
+    constant PEDESTRIAN_TIME : unsigned(27 downto 0) := to_unsigned(10000000, 28);
+
+begin
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            counter <= (others => '0');
+            pedestrian_counter <= (others => '0');
+            countdown_timer <= (others => '0');
+            h_state <= RED;
+            v_state <= RED;
+        elsif rising_edge(clk) then
+            counter <= counter + 1;
+            
+            if manual_override = '1' then
+                -- Manual override, allow pedestrians
+                h_state <= PEDESTRIAN;
+                v_state <= PEDESTRIAN;
+                pedestrian_counter <= (others => '0');
+            else
+                if pedestrian_request = '1' and h_state /= PEDESTRIAN and v_state /= PEDESTRIAN then
+                    pedestrian_counter <= pedestrian_counter + 1;
+                else
+                    pedestrian_counter <= (others => '0');
+                end if;
+                
+                if counter < RED_TIME then
+                    h_state <= RED;
+                    v_state <= RED;
+                elsif counter < RED_TIME + RED_YELLOW_TIME then
+                    h_state <= RED_YELLOW;
+                    v_state <= RED_YELLOW;
+                elsif counter < RED_TIME + RED_YELLOW_TIME + GREEN_TIME then
+                    h_state <= GREEN;
+                    v_state <= GREEN;
+                elsif counter < RED_TIME + RED_YELLOW_TIME + GREEN_TIME + YELLOW_TIME then
+                    h_state <= YELLOW;
+                    v_state <= YELLOW;
+                elsif counter < RED_TIME + RED_YELLOW_TIME + GREEN_TIME + YELLOW_TIME + PEDESTRIAN_TIME then
+                    h_state <= PEDESTRIAN;
+                    v_state <= PEDESTRIAN;
+                else
+                    counter <= (others => '0');
+                    h_state <= RED;
+                    v_state <= RED;
+                end if;
+            end if;
+        end if;
+    end process;
+
+    leds <= "00" when h_state = RED else
+            "01" when h_state = GREEN else
+            "10" when h_state = YELLOW else
+            "00"; -- PEDESTRIAN state
+
+    hex_displays <= "1000000" when h_state = RED else
+                   "0011111" when h_state = GREEN else
+                   "0011000" when h_state = YELLOW else
+                   "0000000"; -- PEDESTRIAN state
+
+    process(counter)
+    begin
+        countdown_timer <= PEDESTRIAN_TIME - counter when h_state = PEDESTRIAN else
+                           (others => '0');
+    end process;
+
+end behaviour;
